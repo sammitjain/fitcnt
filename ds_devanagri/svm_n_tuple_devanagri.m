@@ -19,7 +19,7 @@ data = quantized_data;
 
 fv_length = size(data,2)-1; % 1024
 
-N = 5;  % length of each tuple
+N = 4;  % length of each tuple
 
 M = 500;    % number of tuples
 
