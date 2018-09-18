@@ -2,7 +2,7 @@
 %   By - Sammit Jain | Visiting Research Scholar, CUNY
 %   Dataset - Splice-junction gene sequences
 
-
+function [tuples,accuracy] = svm_n_tuple_splice(M,N)
 %% Import and prepare data
 
 data = csvread('splice3.csv');
@@ -11,9 +11,9 @@ num_classes = 3;
 
 fv_length = size(data,2)-1; % 60
 
-N = 4;  % length of each tuple
-
-M = 240;    % number of tuples
+% N = 4;  % length of each tuple
+% 
+% M = 240;    % number of tuples
 
 base = 4; % Each feature can take values 1,2,3 or 4
 random_indices = randperm(size(data,1));
@@ -24,7 +24,7 @@ crossval = data(random_indices(round(0.5*size(data,1))+1:round(0.75*size(data,1)
 
 test = data(random_indices(round(0.75*size(data,1))+1:end),:);
 
-disp("Completed: Data preprocesing + partitioning");
+%disp("Completed: Data preprocesing + partitioning");
 
 %% Create tuples (random)
 
@@ -34,7 +34,7 @@ for i = 1:M
     tuples(i,:) = randperm(fv_length,N);
 end
 
-disp("Completed: Tuple generation");
+%disp("Completed: Tuple generation");
 
 %% Initialize memory structure
 mem = cell([1 M]);
@@ -47,7 +47,7 @@ for i = 1:M
     end
 end
 
-disp("Completed: Memory structure init");
+%disp("Completed: Memory structure init");
 %% Training the network
 tic
 for i = 1:M % loop across all tuples
@@ -61,7 +61,7 @@ for i = 1:M % loop across all tuples
 end
 toc
 
-disp("Completed: Network training");
+%disp("Completed: Network training");
 
 tdata = tabulate(train(:,end));
 for i = 1:M
@@ -70,12 +70,10 @@ for i = 1:M
     end
 end
 
-disp("Completed: Normalization of values");
+%disp("Completed: Normalization of values");
 
 %% Training SVM on CV data points
 svm_scores = zeros(size(crossval,1),num_classes);
-
-predicted_class = zeros(size(test,1),1);
 
  for d = 1:size(crossval,1)
      tuple_scores = zeros(M,num_classes);
@@ -92,13 +90,13 @@ predicted_class = zeros(size(test,1),1);
 
  end
  
-disp("Completed: Calculation of crossval scores");
+%disp("Completed: Calculation of crossval scores");
  X = svm_scores;
  Y = crossval(:,end);
  
  Mdl = fitcecoc(X,Y);
  
- disp("Completed: SVM modelling of crossval set");
+ %disp("Completed: SVM modelling of crossval set");
  
  %% Test scores
 test_scores = zeros(size(test,1),num_classes);
@@ -120,6 +118,8 @@ test_scores = zeros(size(test,1),num_classes);
 
  Yp = predict(Mdl,test_scores);
 
- disp("Completed: Prediction using SVM");
+ %disp("Completed: Prediction using SVM");
 accuracy = 100*sum(Yp==test(:,end))/size(test,1);
-disp(['Accuracy = ' num2str(accuracy) ' %']);
+%disp(['Accuracy = ' num2str(accuracy) ' %']);
+
+end
