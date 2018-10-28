@@ -5,23 +5,15 @@
 
 %% Import and prepare data
 
-load devanagri_all_digits.mat
+load deva_final.mat
 
-num_samples = 500;  % of each digit out of 2000
-
-data = digit_sampling(num_samples,data); %get data from .mat file
-
-quantized_data = [data(:,1:end-1)<128 data(:,end)];
-
-num_classes = 4;
-
-data = quantized_data;
+num_classes = 10;
 
 fv_length = size(data,2)-1; % 1024
 
-N = 4;  % length of each tuple
+N = 8;  % length of each tuple
 
-M = 500;    % number of tuples
+M = 200;    % number of tuples
 
 base = 2; % Each feature can take values 1 or 0
 

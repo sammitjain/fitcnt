@@ -1,27 +1,21 @@
 %%  Basic N-tuple implementation
 %   By - Sammit Jain | Visiting Research Scholar, CUNY
-%   Dataset - Devanagri digits
+%   Dataset - Devanagri digits (2000 samples each for 0-9)
 
 
 %% Import and prepare data
 
-load devanagri_all_digits.mat
+load deva_final.mat;
 
-num_samples = 500;  % of each digit out of 2000
-
-data = digit_sampling(num_samples,data); %get data from .mat file
-
-quantized_data = [data(:,1:end-1)<128 data(:,end)];
-
-num_classes = 4;
-
-data = quantized_data;
+num_classes = 10;
+% 
+% data = quantized_data;
 
 fv_length = size(data,2)-1; % 1024
 
-N = 6;  % length of each tuple
+N = 4;  % length of each tuple
 
-M = 1000;    % number of tuples
+M = 200;    % number of tuples
 
 base = 2; % Each feature can take values 1,2,3 or 4
 random_indices = randperm(size(data,1));
