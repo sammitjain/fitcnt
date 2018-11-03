@@ -23,7 +23,8 @@ F = size(data,2)-1; % number of features
 tuples = n_make_tuples(N,T,F);
 
 %% Create memory structure
-mem = n_create_memory(N,T,L,K);
+val = 1; % default value for each entry of table
+mem = n_create_memory(N,T,L,K,val);
 
 %% Tabulate probability values (Training)
 tic
