@@ -32,8 +32,10 @@ mem = n_tuple_train(train,tuples,mem,N,T,L,K);
 toc
 %% Adjust values, cross-validation, combining classifiers, etc
 
-%% Test the classifer (sum-rule)
-test_scores = n_tuple_test(test,tuples,mem,N,T,L,K);
+%% Test the classifer
+rule = 2; % 1: sum rule (~77% accuracy)
+          % 2: product rule (~88% accuracy)
+test_scores = n_tuple_test(test,tuples,mem,rule,N,T,L,K);
 
 %Predict using max of test scores
 predictions = zeros(size(test,1),1);
