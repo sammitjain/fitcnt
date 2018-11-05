@@ -11,14 +11,14 @@ d_range = [0 1]; %range of values (min,max)
 [data,level_vals] = n_quantize(data,d_range,L,type);
 
 %% Test-train-crossval split
-train_perc = 0.75;
+train_perc = 0.5;
 test_perc = 0.25;
-crossval_perc = 0;
+crossval_perc = 0.25;
 [train,test,crossval] = n_ttc_split(data,train_perc,test_perc,crossval_perc);
 
 %% Create tuples
 N = 10; % tuple length
-T = 100; % number of tuples
+T = 80; % number of tuples
 F = size(data,2)-1; % number of features
 tuples = n_make_tuples(N,T,F);
 
@@ -32,8 +32,11 @@ mem = n_tuple_train(train,tuples,mem,N,T,L,K);
 toc
 %% Adjust values, cross-validation, combining classifiers, etc
 
+rule = 2;
+cross_scores = n_tuple_test(crossval,tuples,mem,rule,N,T,L,K);
+Mdl = fitctree(cross_scores,crossval(:,end));
 %% Test the classifer
-rule = 1; % 1: sum rule (~77% accuracy)
+%rule = 2; % 1: sum rule (~77% accuracy)
           % 2: product rule (~88% accuracy)
 test_scores = n_tuple_test(test,tuples,mem,rule,N,T,L,K);
 
@@ -42,6 +45,8 @@ predictions = zeros(size(test,1),1);
     for m = 1:size(test,1)
         [~,predictions(m)] = max(test_scores(m,:));
     end
-
+predictions2 = predict(Mdl,test_scores);
 accuracy = 100*sum(predictions==test(:,end))/size(test,1);
+accuracy2 = 100*sum(predictions2==test(:,end))/size(test,1);
 disp(['Accuracy = ' num2str(accuracy) ' %']);
+disp(['Accuracy2 = ' num2str(accuracy2) ' %']);
