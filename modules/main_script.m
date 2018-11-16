@@ -33,8 +33,8 @@ toc
 %% Adjust values, cross-validation, combining classifiers, etc
 
 %% Test the classifer
-rule = 1; % 1: sum rule (~77% accuracy)
-          % 2: product rule (~88% accuracy)
+rule = 2; % 1: sum rule (~82% accuracy)
+          % 2: product rule (~92% accuracy)
 test_scores = n_tuple_test(test,tuples,mem,rule,N,T,L,K);
 
 %Predict using max of test scores
