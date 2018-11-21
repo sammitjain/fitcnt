@@ -42,33 +42,48 @@ Check if the data is loaded properly by printing out a section of the data along
 \end{par}
 
 \begin{matlabcode}
-whos data;
+data_info = whos('data')
 \end{matlabcode}
 \begin{matlaboutput}
-  Name          Size                  Bytes  Class     Attributes
+data_info = 
+          name: 'data'
+          size: [20000 1025]
+         bytes: 164000000
+         class: 'double'
+        global: 0
+        sparse: 0
+       complex: 0
+       nesting: [1x1 struct]
+    persistent: 0
 
-  data      20000x1025            164000000  double              
 \end{matlaboutput}
+
+\begin{par}
+\begin{flushleft}
+Printing out a 15 x 8 section from the dataset:
+\end{flushleft}
+\end{par}
+
 \begin{matlabcode}
-disp(data(100:115,800:810));
+disp(data(100:115,800:808));
 \end{matlabcode}
 \begin{matlaboutput}
-     0     0     0     0     0     0     0     0     0     0     1
-     0     0     0     0     0     1     1     1     1     0     0
-     0     0     0     0     0     0     1     1     1     1     0
-     0     0     0     0     0     0     1     1     1     0     0
-     0     0     0     0     0     0     0     1     1     1     0
-     0     0     0     0     0     0     1     1     1     0     0
-     0     0     0     0     0     0     0     0     0     0     1
-     0     0     0     0     0     1     1     1     1     0     0
-     0     0     0     0     0     1     1     1     1     0     0
-     0     0     0     0     0     0     1     1     1     0     0
-     0     0     0     0     0     1     1     1     0     0     0
-     0     0     0     0     0     1     1     1     1     0     0
-     0     0     0     0     1     1     1     0     0     0     0
-     0     0     0     0     1     1     1     0     0     0     0
-     0     0     0     0     0     1     1     1     1     0     0
-     0     0     0     0     0     0     0     1     1     1     0
+     0     0     0     0     0     0     0     0     0
+     0     0     0     0     0     1     1     1     1
+     0     0     0     0     0     0     1     1     1
+     0     0     0     0     0     0     1     1     1
+     0     0     0     0     0     0     0     1     1
+     0     0     0     0     0     0     1     1     1
+     0     0     0     0     0     0     0     0     0
+     0     0     0     0     0     1     1     1     1
+     0     0     0     0     0     1     1     1     1
+     0     0     0     0     0     0     1     1     1
+     0     0     0     0     0     1     1     1     0
+     0     0     0     0     0     1     1     1     1
+     0     0     0     0     1     1     1     0     0
+     0     0     0     0     1     1     1     0     0
+     0     0     0     0     0     1     1     1     1
+     0     0     0     0     0     0     0     1     1
 \end{matlaboutput}
 
 \begin{par}
@@ -131,27 +146,25 @@ Then we check the portion of data to see if it has been successfully quantized.
 \end{par}
 
 \begin{matlabcode}
-disp(data(100:115,800:810)); disp(level_vals);
+disp(data(100:115,800:808));
 \end{matlabcode}
 \begin{matlaboutput}
-     0     0     0     0     0     0     0     0     0     0     1
-     0     0     0     0     0     1     1     1     1     0     0
-     0     0     0     0     0     0     1     1     1     1     0
-     0     0     0     0     0     0     1     1     1     0     0
-     0     0     0     0     0     0     0     1     1     1     0
-     0     0     0     0     0     0     1     1     1     0     0
-     0     0     0     0     0     0     0     0     0     0     1
-     0     0     0     0     0     1     1     1     1     0     0
-     0     0     0     0     0     1     1     1     1     0     0
-     0     0     0     0     0     0     1     1     1     0     0
-     0     0     0     0     0     1     1     1     0     0     0
-     0     0     0     0     0     1     1     1     1     0     0
-     0     0     0     0     1     1     1     0     0     0     0
-     0     0     0     0     1     1     1     0     0     0     0
-     0     0     0     0     0     1     1     1     1     0     0
-     0     0     0     0     0     0     0     1     1     1     0
-
-     0     1     1
+     0     0     0     0     0     0     0     0     0
+     0     0     0     0     0     1     1     1     1
+     0     0     0     0     0     0     1     1     1
+     0     0     0     0     0     0     1     1     1
+     0     0     0     0     0     0     0     1     1
+     0     0     0     0     0     0     1     1     1
+     0     0     0     0     0     0     0     0     0
+     0     0     0     0     0     1     1     1     1
+     0     0     0     0     0     1     1     1     1
+     0     0     0     0     0     0     1     1     1
+     0     0     0     0     0     1     1     1     0
+     0     0     0     0     0     1     1     1     1
+     0     0     0     0     1     1     1     0     0
+     0     0     0     0     1     1     1     0     0
+     0     0     0     0     0     1     1     1     1
+     0     0     0     0     0     0     0     1     1
 \end{matlaboutput}
 
 \begin{par}
@@ -177,10 +190,10 @@ As described earlier, typical workflow in most classification algorithms involve
 \end{par}
 
 \begin{matlabcode}
-train_perc = 0.75;
-test_perc = 0.25;
-crossval_perc = 0;
-[train,test,crossval] = n_ttc_split(data,train_perc,test_perc,crossval_perc);
+p_train = 0.75;
+p_test = 0.25;
+p_crossval = 0;
+[train,test,crossval] = n_ttc_split(data,p_train,p_test,p_crossval);
 \end{matlabcode}
 
 \begin{par}
@@ -190,14 +203,52 @@ We can check if the splitting was indeed according to the proportion specificed:
 \end{par}
 
 \begin{matlabcode}
-whos train test crossval;
+train_info = whos('train')
 \end{matlabcode}
 \begin{matlaboutput}
-  Name              Size                  Bytes  Class     Attributes
+train_info = 
+          name: 'train'
+          size: [15000 1025]
+         bytes: 123000000
+         class: 'double'
+        global: 0
+        sparse: 0
+       complex: 0
+       nesting: [1x1 struct]
+    persistent: 0
 
-  crossval          0x1025                    0  double              
-  test           5000x1025             41000000  double              
-  train         15000x1025            123000000  double              
+\end{matlaboutput}
+\begin{matlabcode}
+test_info = whos('test')
+\end{matlabcode}
+\begin{matlaboutput}
+test_info = 
+          name: 'test'
+          size: [5000 1025]
+         bytes: 41000000
+         class: 'double'
+        global: 0
+        sparse: 0
+       complex: 0
+       nesting: [1x1 struct]
+    persistent: 0
+
+\end{matlaboutput}
+\begin{matlabcode}
+crossval_info = whos('crossval')
+\end{matlabcode}
+\begin{matlaboutput}
+crossval_info = 
+          name: 'crossval'
+          size: [0 1025]
+         bytes: 0
+         class: 'double'
+        global: 0
+        sparse: 0
+       complex: 0
+       nesting: [1x1 struct]
+    persistent: 0
+
 \end{matlaboutput}
 
 
@@ -253,12 +304,20 @@ Check if the tuples have been created properly.
 \end{par}
 
 \begin{matlabcode}
-whos tuples;
+tuples_info = whos('tuples')
 \end{matlabcode}
 \begin{matlaboutput}
-  Name          Size            Bytes  Class     Attributes
+tuples_info = 
+          name: 'tuples'
+          size: [100 10]
+         bytes: 8000
+         class: 'double'
+        global: 0
+        sparse: 0
+       complex: 0
+       nesting: [1x1 struct]
+    persistent: 0
 
-  tuples      100x10             8000  double              
 \end{matlaboutput}
 
 \begin{par}
@@ -268,20 +327,20 @@ Print out a portion to check the values.
 \end{par}
 
 \begin{matlabcode}
-disp(tuples(3:13,1:7));
+disp(tuples(3:13,1:4));
 \end{matlabcode}
 \begin{matlaboutput}
-         724          84         425         887         291          49         363
-         186         670         647         518         212         467         173
-         725         649         414         323         274         782         641
-         123         177         839          29         929         958         367
-         979          24         514         698         762          12         969
-          35         610         883         494         684         912         182
-         629         738         178        1013         112         175         480
-          82         589         216         597         336         948           9
-          83         821         737           5         125         916         651
-          14         643         578         793         429         581         916
-         342         219          38         354         338         374         631
+   602   986   474   146
+   904   400   656   585
+   104    83   207   964
+   950   529    33   235
+   677   637    28   727
+   170   377   372   507
+   176   375    75   512
+    12   593   304   821
+   708    12   710   803
+   259   174   800   727
+   431   860    57   315
 \end{matlaboutput}
 
 
@@ -304,12 +363,20 @@ We create the memory structure using the previously supplied information. The va
 \end{par}
 
 \begin{matlabcode}
-mem = n_create_memory(N,T,L,K,val); whos mem;
+mem = n_create_memory(N,T,L,K,val); mem_info = whos('mem')
 \end{matlabcode}
 \begin{matlaboutput}
-  Name      Size               Bytes  Class    Attributes
+mem_info = 
+          name: 'mem'
+          size: [1 100]
+         bytes: 8315200
+         class: 'cell'
+        global: 0
+        sparse: 0
+       complex: 0
+       nesting: [1x1 struct]
+    persistent: 0
 
-  mem       1x100            8315200  cell               
 \end{matlaboutput}
 
 \begin{par}
@@ -447,7 +514,7 @@ Tuple number: 97
 Tuple number: 98
 Tuple number: 99
 Tuple number: 100
-Elapsed time is 14.976091 seconds.
+Elapsed time is 12.169074 seconds.
 \end{matlaboutput}
 
 \begin{par}
@@ -460,16 +527,16 @@ Check values in mem. Printing out first ten values of the table corresponding to
 disp(mem{4}{8}(1:10));
 \end{matlabcode}
 \begin{matlaboutput}
-    0.0073
-    0.0079
-    0.0112
-    0.0013
-    0.0145
-    0.0462
-    0.0073
-    0.0086
+    0.0960
+    0.0033
+    0.0120
     0.0020
-    0.0040
+    0.0027
+    0.0007
+    0.0007
+    0.0007
+    0.0453
+    0.0020
 \end{matlaboutput}
 
 
@@ -513,7 +580,7 @@ Check the test\_scores for the first observation in the test set.
 disp(test_scores(1,:)');
 \end{matlabcode}
 \begin{matlaboutput}
-  1.0e-143 *
+  1.0e-153 *
 
     0.0000
     0.0000
@@ -522,9 +589,9 @@ disp(test_scores(1,:)');
     0.0000
     0.0000
     0.0000
-    0.4627
     0.0000
     0.0000
+    0.1371
 \end{matlaboutput}
 
 \begin{par}
@@ -550,11 +617,11 @@ Let us check the predictions for the first 5 obervations in the test set.
 disp(predictions(1:5));
 \end{matlabcode}
 \begin{matlaboutput}
+    10
+     2
      8
-     8
-     3
-     8
-     7
+     9
+     6
 \end{matlaboutput}
 
 \begin{par}
@@ -577,7 +644,7 @@ Printing the accuracy:
 disp(['Accuracy = ' num2str(accuracy) ' %']);
 \end{matlabcode}
 \begin{matlaboutput}
-Accuracy = 93.1 %
+Accuracy = 93.72 %
 \end{matlaboutput}
 
 \end{document}

@@ -17,7 +17,7 @@ crossval_perc = 0;
 [train,test,crossval] = n_ttc_split(data,train_perc,test_perc,crossval_perc);
 
 %% Create tuples
-N = 10; % tuple length
+N = 18; % tuple length
 T = 100; % number of tuples
 F = size(data,2)-1; % number of features
 tuples = n_make_tuples(N,T,F);
