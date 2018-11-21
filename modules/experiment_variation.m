@@ -1,8 +1,9 @@
-N_vals = 3:8;
-T_vals = 100:100:600;
+N_vals = 3:15;
+T_vals = 50:50:200;
 
 load default_vals.mat
-acc_table = zeros(6);
+rule = 1;
+acc_table = zeros(13,4);
 kk = 1;
 ll = 1;
 for ii = N_vals
