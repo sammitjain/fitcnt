@@ -8,8 +8,8 @@ acc_table = zeros(size(vals,2),1);
 tuples = tuple_setup(N,T);
 
 %% Test-train-crossval split
-train_perc = 0.6;
-test_perc = 0.4;
+train_perc = 0.8;
+test_perc = 0.2;
 crossval_perc = 0;
 [train,test,crossval] = n_ttc_split(data,train_perc,test_perc,crossval_perc);
 k = 1;
