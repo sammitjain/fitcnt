@@ -19,8 +19,8 @@ crossval_perc = 0;
 B = 10;
 preds = zeros(size(test,1),B);
 
-N = 12;
-T = 80;
+N = 18;
+T = 100;
 F = size(test,2)-1;
 
 val = 1; % default value for each entry of table

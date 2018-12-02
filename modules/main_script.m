@@ -17,13 +17,13 @@ crossval_perc = 0;
 [train,test,crossval] = n_ttc_split(data,train_perc,test_perc,crossval_perc);
 
 %% Create tuples
-N = 18; % tuple length
+N = 16; % tuple length
 T = 100; % number of tuples
 F = size(data,2)-1; % number of features
 tuples = n_make_tuples(N,T,F);
 
 %% Create memory structure
-val = 1; % default value for each entry of table
+val = 0.6; % default value for each entry of table
 mem = n_create_memory(N,T,L,K,val);
 
 %% Tabulate probability values (Training)
@@ -33,7 +33,7 @@ toc
 %% Adjust values, cross-validation, combining classifiers, etc
 
 %% Test the classifer
-rule = 2; % 1: sum rule (~82% accuracy)
+rule = 1; % 1: sum rule (~82% accuracy)
           % 2: product rule (~92% accuracy)
 test_scores = n_tuple_test(test,tuples,mem,rule,N,T,L,K);
 
