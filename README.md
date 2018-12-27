@@ -1,4 +1,4 @@
-# N-Tuple Method
+# fitcnt: The N-Tuple Classifier
 
 The N-Tuple Method has it's humble origins in early Pattern Recognition problems, notably the Hand-written character recognition problem. Developed by Bledsoe and Browning by 1959, as a classification algorithm, it breaks down high-dimensional models into many smaller models, which are easier to handle. The idea is to take T sets of size N subsets of the feature space. Each subset of size N is called a tuple, and becomes one of the many representatives for the data, thus giving this method the name - The N-tuple Method. 
 
